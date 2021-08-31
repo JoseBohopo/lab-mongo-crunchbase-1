@@ -1,0 +1,24 @@
+{
+  "name": "starter-code",
+  "version": "1.0.0",
+  "description": "First package json",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoseBohopo/lab-mongo-crunchbase-1.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JoseBohopo/lab-mongo-crunchbase-1/issues"
+  },
+  "homepage": "https://github.com/JoseBohopo/lab-mongo-crunchbase-1#readme",
+  "dependencies": {
+    "clear": "^0.1.0",
+    "mongodb": "^2.2.36",
+    "save": "^2.4.0"
+  }
+}

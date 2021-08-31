@@ -53,6 +53,189 @@ mongoClient.connect(`mongodb://localhost:27017/crunchbase`, (error, db) => {
             })
             break;
 
+            case "4":
+            //  List by name all companies founded in february of 2004.
+            db.collection('companies').find({$and: [{founded_month: 2}, {founded_year: 2004}]}, { name: 1 }).toArray((error, result) => {
+              if (error) {
+                console.log(error);
+                rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+              } else {
+                console.log(result);
+                rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+              }
+            })
+            break;
+
+            case "5":
+            //  5.- List by name all companies founded in the summer of 2004 (april to june) sorted by date.
+
+            db.collection('companies').find({$and: [{$and:[{founded_month:{$gte: 4}},{founded_month:{$lte: 6}}]}, {founded_year: 2004}]}, { name: 1 }).sort({ "founded_month": 1 } ).toArray((error, result) => {
+              if (error) {
+                console.log(error);
+                rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+              } else {
+                console.log(result);
+                rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+              }
+            })
+            break;
+            case "6":
+            // 6.- What companies have offices in "Barcelona".
+            db.collection('companies').find({"offices.city": 'Barcelona'}).count((error, result) => {
+              if (error) {
+                console.log(error);
+                rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+              } else {
+                console.log(result);
+                rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+              }
+            })
+            break;
+            case "7":
+            //   7.- List the 10 companies with more employees sorted ascending (show name and employees).
+
+            db.collection('companies').find({},{name: 1,number_of_employees: 1}).sort({ "number_of_employees": -1 } ).limit(10).toArray((error, result) => {
+              if (error) {
+                console.log(error);
+                rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+              } else {
+                console.log(result);
+                rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+              }
+            })
+            break;
+            case "8":
+            //   8.- Find the company with the name "Facebook"
+
+            db.collection('companies').find({name:'Facebook'},{name: 1}).toArray((error, result) => {
+              if (error) {
+                console.log(error);
+                rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+              } else {
+                console.log(result);
+                rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+              }
+            })
+            break;
+            case "9":
+              //     9.- How many employees has Facebook?
+
+  
+              db.collection('companies').find({name:'Facebook'},{name: 1, number_of_employees : 1}).toArray((error, result) => {
+                if (error) {
+                  console.log(error);
+                  rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+                } else {
+                  console.log(result);
+                  rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+                }
+              })
+              break;
+              case "10":
+              //    10.- List the name of all the products of Facebook
+  
+              db.collection('companies').find({name:'Facebook'},{name: 1,'products.name': 1}).toArray((error, result) => {
+                if (error) {
+                  console.log(error);
+                  rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+                } else {
+                  console.log(...result);
+                  rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+                }
+              })
+              break;
+              case "11":
+              //    10.- List the name of all the products of Facebook
+  
+              db.collection('companies').find({$and:[{name: 'Facebook'},{"relationships.is_past": false}]},{ "relationships.person.first_name":1,'relationships.is_past': 1}).toArray((error, result) => {
+                if (error) {
+                  console.log(error);
+                  rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+                } else {
+                  console.log(result[0].relationships);
+                  rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+                }
+              })
+              break;
+              case "12":
+                //    10.- List the name of all the products of Facebook
+    
+                db.collection('companies').find({$and:[{'relationships.person.first_name':"David"},{'relationships.person.last_name':'Ebersman'},{'relationships.is_past':true}]},{ name:1}).toArray((error, result) => {
+                  if (error) {
+                    console.log(error);
+                    rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+                  } else {
+                    console.log(result);
+                    rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+                  }
+                })
+                break;
+                case "13":
+                //    10.- List the name of all the products of Facebook
+    
+                db.collection('companies').find({name: "Facebook"},{"competitions.competitor.name":1}).toArray((error, result) => {
+                  if (error) {
+                    console.log(error);
+                    rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+                  } else {
+                    console.log(result[0].competitions);
+                    rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+                  }
+                })
+                break;
+                case "14":
+                //    10.- List the name of all the products of Facebook
+    
+                db.collection('companies').find({tag_list: "social-networking"},{name:1,tag_list:1}).toArray((error, result) => {
+                  if (error) {
+                    console.log(error);
+                    rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+                  } else {
+                    console.log(result);
+                    rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+                  }
+                })
+                break;
+                case "15":
+                //    10.- List the name of all the products of Facebook
+    
+                db.collection('companies').find({$and:[{tag_list: /social-network/},{ founded_year: { $gte: 2002} },{ founded_year: { $lte: 2016 }}]},{name:1}).toArray((error, result) => {
+                  if (error) {
+                    console.log(error);
+                    rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+                  } else {
+                    console.log(result);
+                    rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+                  }
+                })
+                break;
+                case "16":
+                  //    10.- List the name of all the products of Facebook
+      
+                  db.collection('companies').find({"offices.city": "London"},{name:1}).toArray((error, result) => {
+                    if (error) {
+                      console.log(error);
+                      rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+                    } else {
+                      console.log(result);
+                      rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+                    }
+                  })
+                  break;
+                  case "17":
+                    //    10.- List the name of all the products of Facebook
+        
+                    db.collection('companies').find({$and:[{"offices.city": "New York"},{tag_list: /social-network/},{ founded_year: { $gte: 2002} },{ founded_year: { $lte: 2016 }}]},{name:1}).toArray((error, result) => {
+                      if (error) {
+                        console.log(error);
+                        rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+                      } else {
+                        console.log(result);
+                        rl.question(`\nType enter to continue: `, (answer) => { mainMenu() });
+                      }
+                    })
+                    break;
+
           // Code here next cases!
         }
       });
